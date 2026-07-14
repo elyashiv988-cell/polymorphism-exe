@@ -19,3 +19,25 @@ tv.activate()
 
 speaker=SmartSeaker("Echo")
 speaker.activate()
+
+# 2
+
+class Device:
+    def __init__(self,name):
+        self.name=name
+    def deactivate(self):
+        print(f"Device {self.name} is now off. ")
+class SmartLamp(Device):
+    def __init__(self, name):
+        super().__init__(name)
+    def deactivate(self):
+        print(f"Lamp {self.name} is dimming and turning off")
+class SmartAC(Device):
+    def __init__(self, name):
+        super().__init__(name)
+    def deactivate(self):
+        print(f"AC {self.name} is cooling down and switching off. ")
+bedroom=SmartLamp("Bedroom Lamp")
+bedroom.deactivate()        
+ac=SmartAC("Living Room AC")
+ac.deactivate()
