@@ -67,3 +67,35 @@ tv.status()
 speaker=SmartSpeaker("Alexa",True,"Bohemian Rhapsody")
 speaker.status()
         
+# 4 
+
+class Device:
+    def __init__(self,name):
+        self.name=name
+    def activate(self):
+        print(f"{self.name} is working")
+class SmartTV(Device):
+    def __init__(self, name):
+        super().__init__(name)
+    def activate(self):
+        print(f"TV {self.name} is working now")
+class SmartLamp(Device):
+    def __init__(self, name):
+        super().__init__(name)
+    def activate(self):
+        print(f"Lamp {self.name} is working")
+class SmartSpeaker(Device):
+    def __init__(self, name):
+        super().__init__(name)
+        self.name=name
+    def activate(self):
+        print(f"Speaker {self.name} is working")
+
+tv=SmartTV("LG")
+lamp=SmartLamp("Desk Lamp")
+speaker=SmartSpeaker("Echo")
+Devices=[tv,lamp,speaker]
+for device in Devices:
+    device.activate()
+
+# 5 
