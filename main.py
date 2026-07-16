@@ -1,5 +1,5 @@
 # 1 
-
+'''
 class Device:
     def __init__(self,name):
         self.name=name
@@ -229,12 +229,13 @@ class SmartSpeaker(Device):
         super().__init__(name)
     def energy_usage(self):
         return 30
-tv=SmartTV("SmartTV")
-ac=SmartAC("SmartAC")
-lamp=SmartLamp("SmartLamp")
-speaker=SmartSpeaker("SmartSpeaker")
-Devices=[tv,ac,lamp,speaker]
+Devices=[
+    SmartTV("SmartTV"),
+    SmartAC("SmartAC"),
+    SmartLamp("SmartLamp"),
+    SmartSpeaker("SmartSpeaker")]
 total=0
+
 for device in Devices:
     print(device.name,":",device.energy_usage(),"w")
     total+=device.energy_usage()
@@ -245,6 +246,7 @@ print("Total:",total,"W")
 class Device:
     def __init__(self,name):
         self.name=name
+        self.curecct_status=None
     def activate(self):
         print(f"{self.name} is now on" )
     def deacticate(self):
@@ -256,19 +258,29 @@ class SmartAC(Device):
         super().__init__(name)
     def activate(self):
         print(f"AC {self.name} is now on")
+        self.correct_status=True
     def deacticate(self):
         print(f"AC {self.name} is now off")
+        self.correct_status=False
     def status(self):
-        print(f"AC {self.name} unknown")
+        if self.correct_status==True:
+            print(f"AC {self.name} temperature is set to 22 C")
+        else:
+            print(f"AC {self.name} is off")
 class SmartGate(Device):
     def __init__(self, name):
         super().__init__(name)
     def activate(self):
         print(f"Gate {self.name} is open now")
+        self.curecct_status=True
     def deacticate(self):
         print(f"Gate {self.name} is close now")
+        self.curecct_status=False
     def status(self):
-        print(f"Gate {self.name} unknown status")
+        if self.curecct_status==True:
+            print(f"Gate {self.name} is currently closed")
+        else:
+            print(f"Gate {self.name} is off")
 class SmartLighte(Device):
     def __init__(self, name):
         super().__init__(name)
@@ -277,31 +289,39 @@ class SmartLighte(Device):
     def deacticate(self):
         print(f"Light {self.name} is turn off")
     def status(self):
-        print(f"Light {self.name} unknown status")
+        print(f"Light {self.name}brightness is at 80%")
 class SmartTV(Device):
     def __init__(self, name):
         super().__init__(name)
     def activate(self):
         print(f"Tv {self.name} is on")
+        self.curecct_status=True
     def deacticate(self):
         print(f"TV {self.name} is off")
+        self.curecct_status=False
     def status(self):
-        print(f"TV {self.name} unknown status")
+        if self.curecct_status==True:
+            print(f"TV {self.name} is on")
+        else:
+            print(f"TV {self.name} is off")
 class SmartSpeaker(Device):
     def __init__(self, name):
         super().__init__(name)
     def activate(self): 
         print(f"Speaker {self.name} is turn on")
+        self.curecct_status=True
     def deacticate(self):
         print(f"Speaker {self.name} is turn off")
+        self.curecct_status=False
     def status(self):
-        print(f"Speaker {self.name} unknown status")
+        if self.curecct_status==True:
+            print(f"Speaker {self.name} is playing songs")
+        else:
+            print(f"Speaker {self.name} is off")
 
 class HomeSystem:
-    
-    
-    def __init__(self):
-        self.devices=[self.ac,self.tv,self.gate,self.speaker,self.light]
+    def __init__(self,devices):
+        self.devices=devices if devices is not None else []
     def activate_all(self):
         for device in self.devices:
             device.activate()
@@ -311,14 +331,57 @@ class HomeSystem:
     def system_report(self):
         for device in self.devices:
             device.status()
-    ac=SmartAC("Tornado")
-    tv=SmartTV("LG")
-    gate=SmartGate("main")
-    speaker=SmartSpeaker("Bose")
-    light=SmartLighte("Living Room")
+    
+devices_list = [
+    SmartAC("Tornado"),
+    SmartTV("LG"),
+    SmartGate("Main Gate"),
+    SmartSpeaker("Bose"),
+    SmartLighte("Living Room")]
 
-smarthome=HomeSystem()
+smarthome=HomeSystem(devices_list)
+
 smarthome.activate_all()
 smarthome.deactivate_all()
 smarthome.system_report()
+'''
+
+# 10 
+
+class Device:
+    def __init__(self,name):
+        self.name=name
+    def trigger_alarm(self,alert_type):
+        print(f"{self.name} received alert: {alert_type}")
+class  SmartLamp(Device):
+    def trigger_alarm(self, alert_type):
+        print(f"{self.name} received alert {alert_type}, flash on!")
+class SmartSpeaker(Device):
+    def trigger_alarm(self, alert_type):
+        print(f"{self.name} received alret {alert_type}, sound on!")
+class SmartTV(Device):
+    def trigger_alarm(self, alert_type):
+        print(f"{self.name} received alret {alert_type},  emergency broadvast on")
+class SmartDoorLock(Device):
+    def trigger_alarm(self, alert_type):
+        print(f"{self.name} received alret {alert_type}, the doors are locks")
+
+class AlarmSystem:
+    def __init__(self):
+        self.devices=[
+        SmartTV("LG"),
+        SmartDoorLock("All doors"),
+        SmartSpeaker("Bose"),
+        SmartLamp("Living Room")]
+
+    def send_alert(self,alert_type):
+        for device in self.devices:
+            device.trigger_alarm(alert_type)
+
+
+emergency1=AlarmSystem()
+emergency1.send_alert("fire")
+emergency1.send_alert("break-in")
+
+        
 
